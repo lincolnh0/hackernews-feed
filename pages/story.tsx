@@ -45,6 +45,20 @@ export default function Story({ id }) {
     }
   };
 
+  const timeAgo = (pastDate) => {
+    const diff = (Date.now() - pastDate) / 1000;
+    const units = ["s", "m", "h", "d"];
+    const divider = [1, 60, 3600, 86400];
+    let results = "";
+    units.forEach((unit, index) => {
+      if (diff > divider[index]) {
+        results = Math.round(diff / divider[index]) + unit;
+      }
+    });
+
+    return results;
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setTimeout(() => {
@@ -71,10 +85,26 @@ export default function Story({ id }) {
         <Typography variant="h3" component="h1" style={{ padding: "16px 0" }}>
           {data.title}
         </Typography>
-        <Typography style={{ padding: "16px 0" }}>
-          by {data.by}
-          {data.url ? "- " + data.url.split("/")[2].replace("www.", "") : null}
-        </Typography>
+
+        {data.text ? (
+          <Paper>
+            <Typography style={{ padding: "16px" }}>
+              {data.by} - {timeAgo(new Date(data.time * 1000))}
+            </Typography>
+
+            <Typography
+              style={{ padding: "16px" }}
+              dangerouslySetInnerHTML={{ __html: data.text }}
+            />
+          </Paper>
+        ) : (
+          <Typography style={{ padding: "16px 0" }}>
+            by {data.by}
+            {data.url
+              ? "- " + data.url.split("/")[2].replace("www.", "")
+              : null}
+          </Typography>
+        )}
 
         {data.url ? (
           <Fade in={data.url}>

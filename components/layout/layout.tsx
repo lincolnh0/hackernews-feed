@@ -1,11 +1,9 @@
-import { Container, Grid, Button } from "@material-ui/core";
-
-import { useEffect, useState } from "react";
-import useStyles from "./styles";
+import { Container, Grid, Button, makeStyles } from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
+import Fab from "@material-ui/core/Fab";
+
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 export default function Layout({ children }) {
   const classes = useStyles();
@@ -45,7 +43,6 @@ function ScrollTop({ children, window = null }) {
   const classes = useStyles();
 
   if (typeof window !== "undefined") {
-    // browser code
     const trigger = useScrollTrigger({
       target: window ? window() : undefined,
       disableHysteresis: true,
@@ -76,3 +73,18 @@ function ScrollTop({ children, window = null }) {
   }
   return null;
 }
+
+const useStyles = makeStyles((theme) => ({
+  buttons: {
+    padding: theme.spacing(2),
+    marginRight: theme.spacing(2),
+  },
+  nav: {
+    marginTop: theme.spacing(2),
+  },
+  float: {
+    position: "fixed",
+    bottom: theme.spacing(8),
+    right: theme.spacing(4),
+  },
+}));

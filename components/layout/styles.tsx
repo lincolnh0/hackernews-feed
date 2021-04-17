@@ -8,6 +8,11 @@ const useStyles = makeStyles((theme) => ({
   nav: {
     marginTop: theme.spacing(2),
   },
+  float: {
+    position: "fixed",
+    bottom: theme.spacing(8),
+    right: theme.spacing(4),
+  },
 }));
 
 export default useStyles;

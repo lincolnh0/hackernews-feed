@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
-    // color: "#f5f5f5",
-    padding: "10px",
+    padding: theme.spacing(2),
     marginRight: theme.spacing(2),
   },
   nav: {

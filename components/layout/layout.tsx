@@ -6,7 +6,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 
-export default function Layout({ children, window }) {
+export default function Layout({ children }) {
   const classes = useStyles();
   return (
     <Container maxWidth="md" id="top">
@@ -31,7 +31,7 @@ export default function Layout({ children, window }) {
         </Button>
       </Grid>
       {children}
-      <ScrollTop window={window}>
+      <ScrollTop>
         <Fab color="secondary" size="small" aria-label="back to top">
           <KeyboardArrowUpIcon />
         </Fab>
@@ -40,11 +40,11 @@ export default function Layout({ children, window }) {
   );
 }
 
-function ScrollTop({ children, window }) {
+function ScrollTop({ children }) {
   const classes = useStyles();
 
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
+    target: window,
     disableHysteresis: true,
     threshold: 100,
   });

@@ -5,9 +5,9 @@ import {
   Card,
   CardActionArea,
   Box,
-  CardActions,
+  Fade,
+  Collapse,
   Typography,
-  Button,
 } from "@material-ui/core";
 
 import useStyles from "./styles";
@@ -39,45 +39,42 @@ export default function Comment({ id, level = 1, showChildren = 0 }) {
 
   const { data, error } = useSWR(id, ItemEndpoint);
 
-  if (!data) {
-    return (
-      <Card className={classes.root} variant="outlined">
-        Loading
-      </Card>
-    );
-  }
-
-  if (!data.by) {
-    return null;
-  }
-
   return (
-    <Card className={classes.root} variant="outlined" style={{ marginLeft: 4 }}>
-      <CardActionArea onClick={handleCollapse}>
-        <Typography style={{ marginBottom: "8px" }}>
-          {data.by} - {timeAgo(new Date(data.time * 1000))}
-        </Typography>
-      </CardActionArea>
-
-      {collapsed ? null : (
-        <Box borderTop={"1px solid #ccc"} pt={2}>
-          <Typography dangerouslySetInnerHTML={{ __html: data.text }} />
-          {data.kids
-            ? data.kids.map((kid, index) => {
-                return (
-                  <Comment
-                    key={kid}
-                    id={kid}
-                    level={level + 1}
-                    showChildren={parseInt(
-                      ((showChildren - level) / (index + 1)).toPrecision(1)
-                    )}
-                  />
-                );
-              })
-            : null}
-        </Box>
-      )}
-    </Card>
+    <Fade in={true} mountOnEnter unmountOnExit>
+      <Card className={classes.root} variant="outlined">
+        {!data ? (
+          <Typography style={{ marginBottom: "8px" }}>Loading</Typography>
+        ) : data.by ? (
+          <Box>
+            <CardActionArea onClick={handleCollapse}>
+              <Typography style={{ marginBottom: "8px" }}>
+                {data.by} - {timeAgo(new Date(data.time * 1000))}
+              </Typography>
+            </CardActionArea>
+            <Collapse in={!collapsed}>
+              <Box borderTop={"1px solid #ccc"} pt={2}>
+                <Typography dangerouslySetInnerHTML={{ __html: data.text }} />
+                {data.kids
+                  ? data.kids.map((kid, index) => {
+                      return (
+                        <Comment
+                          key={kid}
+                          id={kid}
+                          level={level + 1}
+                          showChildren={parseInt(
+                            ((showChildren - level) / (index + 1)).toPrecision(
+                              1
+                            )
+                          )}
+                        />
+                      );
+                    })
+                  : null}
+              </Box>
+            </Collapse>
+          </Box>
+        ) : null}
+      </Card>
+    </Fade>
   );
 }

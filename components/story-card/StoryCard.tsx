@@ -9,7 +9,7 @@ import {
   Card,
   CardActionArea,
   CardActions,
-  Box,
+  Slide,
   Typography,
   Button,
 } from "@material-ui/core";
@@ -41,28 +41,29 @@ export default function StoryCard({ id }) {
   }
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardActionArea href={"/story?id=" + data.id}>
-        <Typography variant="h5" component="h2">
-          {data.title}
-        </Typography>
-        <CardActions>
-          <ChatIcon />
-          {data.kids ? (
-            <Typography>{data.kids.length}</Typography>
-          ) : (
-            <Typography>{0}</Typography>
-          )}
-          <AccessTimeIcon />
-          <Typography>{timeAgo(new Date(data.time * 1000))}</Typography>
-          <ArrowUpwardIcon />
-          <Typography>{data.score}</Typography>
-          <Button target="_blank" color="secondary" href={data.url}>
-            Source
-          </Button>
-        </CardActions>
-      </CardActionArea>
-    </Card>
+    <Slide in={true} direction="up" mountOnEnter unmountOnExit>
+      <Card className={classes.root} variant="outlined">
+        <CardActionArea href={"/story?id=" + data.id}>
+          <Typography variant="h5" component="h2">
+            {data.title}
+          </Typography>
+          <CardActions>
+            <ChatIcon />
+            {data.kids ? (
+              <Typography>{data.kids.length}</Typography>
+            ) : (
+              <Typography>{0}</Typography>
+            )}
+            <AccessTimeIcon />
+            <Typography>{timeAgo(new Date(data.time * 1000))}</Typography>
+            <ArrowUpwardIcon />
+            <Typography>{data.score}</Typography>
+            <Button target="_blank" color="secondary" href={data.url}>
+              Source
+            </Button>
+          </CardActions>
+        </CardActionArea>
+      </Card>
+    </Slide>
   );
 }
-// href={data.url}

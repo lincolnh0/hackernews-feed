@@ -1,5 +1,6 @@
 import { Container, Grid, Button } from "@material-ui/core";
 
+import { useEffect, useState } from "react";
 import useStyles from "./styles";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -40,30 +41,38 @@ export default function Layout({ children }) {
   );
 }
 
-function ScrollTop({ children }) {
+function ScrollTop({ children, window = null }) {
   const classes = useStyles();
 
-  const trigger = useScrollTrigger({
-    target: window,
-    disableHysteresis: true,
-    threshold: 100,
-  });
+  if (typeof window !== "undefined") {
+    // browser code
+    const trigger = useScrollTrigger({
+      target: window ? window() : undefined,
+      disableHysteresis: true,
+      threshold: 100,
+    });
 
-  const handleClick = (event) => {
-    const anchor = (event.target.ownerDocument || document).querySelector(
-      "#top"
+    const handleClick = (event) => {
+      const anchor = (event.target.ownerDocument || document).querySelector(
+        "#top"
+      );
+
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    return (
+      <Zoom in={trigger}>
+        <div
+          onClick={handleClick}
+          role="presentation"
+          className={classes.float}
+        >
+          {children}
+        </div>
+      </Zoom>
     );
-
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <Zoom in={trigger}>
-      <div onClick={handleClick} role="presentation" className={classes.float}>
-        {children}
-      </div>
-    </Zoom>
-  );
+  }
+  return null;
 }

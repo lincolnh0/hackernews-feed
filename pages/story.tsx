@@ -6,7 +6,14 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 
-import { Box, Typography, Collapse, Fade, Button } from "@material-ui/core";
+import {
+  Box,
+  Typography,
+  Collapse,
+  Fade,
+  Button,
+  Paper,
+} from "@material-ui/core";
 import Iframe from "react-iframe";
 
 import ItemEndpoint from "../lib/hn-endpoint";
@@ -64,24 +71,28 @@ export default function Story({ id }) {
         <Typography variant="h3" component="h1" style={{ padding: "16px 0" }}>
           {data.title}
         </Typography>
-        <Fade in={data.url !== null}>
-          <Box>
-            <Typography style={{ padding: "16px 0" }}>
-              {data.url.split("/")[2].replace("www.", "")}
-            </Typography>
-            <Box mb={4}>
-              <Button color="primary" onClick={togglePreview}>
-                Preview
-              </Button>
-              <Button color="secondary" href={data.url} target="_blank">
-                Source
-              </Button>
+        <Typography style={{ padding: "16px 0" }}>
+          by {data.by}
+          {data.url ? "- " + data.url.split("/")[2].replace("www.", "") : null}
+        </Typography>
+
+        {data.url ? (
+          <Fade in={data.url}>
+            <Box>
+              <Box mb={4}>
+                <Button color="primary" onClick={togglePreview}>
+                  Preview
+                </Button>
+                <Button color="secondary" href={data.url} target="_blank">
+                  Source
+                </Button>
+              </Box>
+              <Collapse in={preview}>
+                <Iframe url={data.url} width="100%" height="500px" />
+              </Collapse>
             </Box>
-            <Collapse in={preview}>
-              <Iframe url={data.url} width="100%" height="500px" />
-            </Collapse>
-          </Box>
-        </Fade>
+          </Fade>
+        ) : null}
       </Box>
       {data.kids ? (
         data.kids.slice(0, comments).map((kid, index) => {
@@ -90,7 +101,9 @@ export default function Story({ id }) {
           );
         })
       ) : (
-        <Typography>No comments yet</Typography>
+        <Paper style={{ padding: 16 }}>
+          <Typography>No comments yet</Typography>
+        </Paper>
       )}
     </Box>
   );

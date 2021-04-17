@@ -69,7 +69,7 @@ export default function Story({ id }) {
             <Button color="primary" onClick={togglePreview}>
               Preview
             </Button>
-            <Button color="secondary" href={data.url}>
+            <Button color="secondary" href={data.url} target="_blank">
               Source
             </Button>
             {preview ? (

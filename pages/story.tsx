@@ -6,7 +6,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 
-import { Box, Typography, Link, Button } from "@material-ui/core";
+import { Box, Typography, Collapse, Fade, Button } from "@material-ui/core";
 import Iframe from "react-iframe";
 
 import ItemEndpoint from "../lib/hn-endpoint";
@@ -56,7 +56,7 @@ export default function Story({ id }) {
       <Head>
         <title>{data.title} - Hackernews</title>
       </Head>
-      <Box mt={8} mb={8}>
+      <Box mt={8} mb={4}>
         <Button onClick={() => router.back()}>
           <ArrowBack />
           Back
@@ -64,19 +64,26 @@ export default function Story({ id }) {
         <Typography variant="h3" component="h1" style={{ padding: "16px 0" }}>
           {data.title}
         </Typography>
-        {data.url ? (
+        <Fade in={data.url !== null}>
           <Box>
-            <Button color="primary" onClick={togglePreview}>
-              Preview
-            </Button>
-            <Button color="secondary" href={data.url} target="_blank">
-              Source
-            </Button>
-            {preview ? (
+            <Typography style={{ padding: "16px 0" }}>
+              {data.url
+                .split("/")[2]
+                .substring(data.url.split("/")[2].replace("www.", ""))}
+            </Typography>
+            <Box mb={4}>
+              <Button color="primary" onClick={togglePreview}>
+                Preview
+              </Button>
+              <Button color="secondary" href={data.url} target="_blank">
+                Source
+              </Button>
+            </Box>
+            <Collapse in={preview}>
               <Iframe url={data.url} width="100%" height="500px" />
-            ) : null}
+            </Collapse>
           </Box>
-        ) : null}
+        </Fade>
       </Box>
       {data.kids ? (
         data.kids.slice(0, comments).map((kid, index) => {

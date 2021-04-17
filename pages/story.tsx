@@ -77,7 +77,7 @@ export default function Story({ id }) {
       <Head>
         <title>{data.title} - Hackernews</title>
       </Head>
-      <Box mt={8} mb={4}>
+      <Paper style={{ marginTop: 8, marginBottom: 4, padding: 24 }}>
         <Button onClick={() => router.back()}>
           <ArrowBack />
           Back
@@ -87,7 +87,7 @@ export default function Story({ id }) {
         </Typography>
 
         {data.text ? (
-          <Paper>
+          <Box>
             <Typography style={{ padding: "16px" }}>
               {data.by} - {timeAgo(new Date(data.time * 1000))}
             </Typography>
@@ -96,7 +96,7 @@ export default function Story({ id }) {
               style={{ padding: "16px" }}
               dangerouslySetInnerHTML={{ __html: data.text }}
             />
-          </Paper>
+          </Box>
         ) : (
           <Typography style={{ padding: "16px 0" }}>
             by {data.by}
@@ -123,7 +123,7 @@ export default function Story({ id }) {
             </Box>
           </Fade>
         ) : null}
-      </Box>
+      </Paper>
       {data.kids ? (
         data.kids.slice(0, comments).map((kid, index) => {
           return (

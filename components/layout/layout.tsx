@@ -10,22 +10,22 @@ export default function Layout({ children }) {
   return (
     <Container maxWidth="md" id="top">
       <Grid className={classes.nav}>
-        <Button className={classes.buttons} href="/">
+        <Button className={classes.buttons} size="small" href="/">
           Top
         </Button>
-        <Button className={classes.buttons} href="/new">
+        <Button className={classes.buttons} size="small" href="/new">
           New
         </Button>
-        <Button className={classes.buttons} href="/best">
+        <Button className={classes.buttons} size="small" href="/best">
           Best
         </Button>
-        <Button className={classes.buttons} href="/ask">
+        <Button className={classes.buttons} size="small" href="/ask">
           Ask
         </Button>
-        <Button className={classes.buttons} href="/show">
+        <Button className={classes.buttons} size="small" href="/show">
           Show
         </Button>
-        <Button className={classes.buttons} href="/jobs">
+        <Button className={classes.buttons} size="small" href="/jobs">
           Jobs
         </Button>
       </Grid>
@@ -76,11 +76,10 @@ function ScrollTop({ children, window = null }) {
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
-    padding: theme.spacing(2),
-    marginRight: theme.spacing(2),
+    padding: theme.spacing(1),
   },
   nav: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
   },
   float: {
     position: "fixed",

@@ -67,9 +67,7 @@ export default function Story({ id }) {
         <Fade in={data.url !== null}>
           <Box>
             <Typography style={{ padding: "16px 0" }}>
-              {data.url
-                .split("/")[2]
-                .substring(data.url.split("/")[2].replace("www.", ""))}
+              {data.url.split("/")[2].replace("www.", "")}
             </Typography>
             <Box mb={4}>
               <Button color="primary" onClick={togglePreview}>

@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 
 import { Box, Typography, Link, Button } from "@material-ui/core";
@@ -19,12 +19,6 @@ export default function Story({ id }) {
   const commentCount = 20;
   const [comments, setComments] = useState(commentCount);
 
-  const moreComments = () => {
-    setComments((prevState) => {
-      return prevState + commentCount;
-    });
-  };
-
   const togglePreview = () => {
     setPreview((prevState) => {
       return !prevState;
@@ -32,6 +26,25 @@ export default function Story({ id }) {
   };
 
   const router = useRouter();
+
+  const handleScroll = (event) => {
+    const threshold =
+      document.body.offsetHeight - document.documentElement.clientHeight - 300;
+    if (window.scrollY > threshold) {
+      setComments((prevState) => {
+        window.removeEventListener("scroll", handleScroll);
+        return prevState + commentCount;
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        window.addEventListener("scroll", handleScroll);
+      }, 2000);
+    }
+  }, [comments]);
 
   if (!data) {
     return null;
@@ -74,9 +87,6 @@ export default function Story({ id }) {
       ) : (
         <Typography>No comments yet</Typography>
       )}
-      {data.kids && comments < data.kids.length ? (
-        <Button onClick={moreComments}>Show more</Button>
-      ) : null}
     </Box>
   );
 }

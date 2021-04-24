@@ -11,9 +11,10 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
+          <meta name="author" content="lincolnh0" />
           <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+            name="description"
+            content="HackerNews feed hosted with Next.js"
           />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link

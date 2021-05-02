@@ -1,24 +1,22 @@
 import { useContext } from "react";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { Container, Grid, Button, makeStyles } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Button,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import Zoom from "@material-ui/core/Zoom";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import rootTheme from "styles/theme";
 import { ThemeContext } from "lib/theme-context";
 
 export default function Layout({ children }) {
   const classes = useStyles();
-  const { theme, setTheme } = useContext(ThemeContext);
-  const toggleThemeMode = () => {
-    const newTheme = rootTheme;
-    newTheme.palette.type = theme.palette.type === "light" ? "dark" : "light";
-    setTheme(createMuiTheme(newTheme));
-  };
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <Container maxWidth="md" id="top">
       <Grid className={classes.nav}>
@@ -43,7 +41,7 @@ export default function Layout({ children }) {
         <IconButton
           className={classes.buttons}
           size="small"
-          onClick={toggleThemeMode}
+          onClick={toggleTheme}
         >
           <Brightness6Icon />
         </IconButton>

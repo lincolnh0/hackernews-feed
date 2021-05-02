@@ -73,7 +73,7 @@ export default function Story({ id }) {
   }
 
   return (
-    <Box mb={16}>
+    <Box pb={8}>
       <Head>
         <title>{data.title} - Hackernews</title>
       </Head>

@@ -2,8 +2,8 @@ import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/styles";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-
-const theme = responsiveFontSizes(createMuiTheme());
+import { ThemeContext } from "../lib/theme-context";
+import { useContext } from "react";
 
 class MyDocument extends Document {
   render() {
@@ -16,7 +16,6 @@ class MyDocument extends Document {
             name="description"
             content="HackerNews feed hosted with Next.js"
           />
-          <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"

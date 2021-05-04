@@ -39,42 +39,53 @@ export default function Comment({ id, level = 1, showChildren = 0 }) {
 
   const { data, error } = useSWR(id, ItemEndpoint);
 
-  return (
-    <Fade in={true} mountOnEnter unmountOnExit>
-      <Card className={classes.root} variant="outlined">
-        {!data ? (
+  if (!data) {
+    return (
+      <Fade in={true} mountOnEnter unmountOnExit>
+        <Card className={classes.root} variant="outlined">
           <Typography style={{ marginBottom: "8px" }}>Loading</Typography>
-        ) : data.by ? (
-          <Box>
-            <CardActionArea onClick={handleCollapse}>
-              <Typography style={{ marginBottom: "8px" }}>
-                {data.by} - {timeAgo(new Date(data.time * 1000))}
-              </Typography>
-            </CardActionArea>
-            <Collapse in={!collapsed}>
-              <Box borderTop={"1px solid #ccc"} pt={2}>
-                <Typography dangerouslySetInnerHTML={{ __html: data.text }} />
-                {data.kids
-                  ? data.kids.map((kid, index) => {
-                      return (
-                        <Comment
-                          key={kid}
-                          id={kid}
-                          level={level + 1}
-                          showChildren={parseInt(
-                            ((showChildren - level) / (index + 1)).toPrecision(
-                              1
-                            )
-                          )}
-                        />
-                      );
-                    })
-                  : null}
-              </Box>
-            </Collapse>
-          </Box>
-        ) : null}
-      </Card>
-    </Fade>
-  );
+        </Card>
+      </Fade>
+    );
+  } else {
+    if (!data.deleted) {
+      return (
+        <Fade in={true} mountOnEnter unmountOnExit>
+          <Card className={classes.root} variant="outlined">
+            <Box>
+              <CardActionArea onClick={handleCollapse}>
+                <Typography style={{ marginBottom: "8px" }}>
+                  {data.by} - {timeAgo(new Date(data.time * 1000))}
+                </Typography>
+              </CardActionArea>
+              <Collapse in={!collapsed}>
+                <Box borderTop={"1px solid #ccc"} pt={2}>
+                  <Typography dangerouslySetInnerHTML={{ __html: data.text }} />
+                  {data.kids
+                    ? data.kids.map((kid, index) => {
+                        return (
+                          <Comment
+                            key={kid}
+                            id={kid}
+                            level={level + 1}
+                            showChildren={parseInt(
+                              (
+                                (showChildren - level) /
+                                (index + 1)
+                              ).toPrecision(1)
+                            )}
+                          />
+                        );
+                      })
+                    : null}
+                </Box>
+              </Collapse>
+            </Box>
+          </Card>
+        </Fade>
+      );
+    }
+  }
+
+  return null;
 }

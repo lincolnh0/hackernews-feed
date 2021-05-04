@@ -47,11 +47,11 @@ export default function Layout({ children }) {
         </IconButton>
       </Grid>
       {children}
-      {/* <ScrollTop>
+      <ScrollTop>
         <Fab color="secondary" size="small" aria-label="back to top">
           <KeyboardArrowUpIcon />
         </Fab>
-      </ScrollTop> */}
+      </ScrollTop>
     </Container>
   );
 }
@@ -59,36 +59,29 @@ export default function Layout({ children }) {
 function ScrollTop({ children, window = null }) {
   const classes = useStyles();
 
-  if (typeof window !== "undefined") {
-    const trigger = useScrollTrigger({
-      target: window ? window() : undefined,
-      disableHysteresis: true,
-      threshold: 100,
-    });
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 100,
+  });
 
-    const handleClick = (event) => {
-      const anchor = (event.target.ownerDocument || document).querySelector(
-        "#top"
-      );
-
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: "smooth" });
-      }
-    };
-
-    return (
-      <Zoom in={trigger}>
-        <div
-          onClick={handleClick}
-          role="presentation"
-          className={classes.float}
-        >
-          {children}
-        </div>
-      </Zoom>
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      "#top"
     );
-  }
-  return null;
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <Zoom in={trigger}>
+      <div onClick={handleClick} role="presentation" className={classes.float}>
+        {children}
+      </div>
+    </Zoom>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({

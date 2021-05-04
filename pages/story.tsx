@@ -107,7 +107,7 @@ export default function Story({ id }) {
         )}
 
         {data.url ? (
-          <Fade in={data.url}>
+          <Fade in={data.url !== undefined}>
             <Box>
               <Box mb={4}>
                 <Button color="primary" onClick={togglePreview}>

@@ -58,9 +58,9 @@ export default function StoryCard({ id }) {
             <Typography>{timeAgo(new Date(data.time * 1000))}</Typography>
             <ArrowUpwardIcon />
             <Typography>{data.score}</Typography>
-            <Button target="_blank" color="secondary" href={data.url}>
+            {/* <Button target="_blank" color="secondary" href={data.url}>
               Source
-            </Button>
+            </Button> */}
           </CardActions>
         </CardActionArea>
       </Card>

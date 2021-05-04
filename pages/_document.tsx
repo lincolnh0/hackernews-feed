@@ -11,6 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
+          <title>HackerNews - lincolnh0</title>
           <meta name="author" content="lincolnh0" />
           <meta
             name="description"

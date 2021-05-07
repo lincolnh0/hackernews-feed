@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 
 import {
@@ -54,13 +54,16 @@ export default function Comment({ id, level = 1, showChildren = 0 }) {
           <Card className={classes.root} variant="outlined">
             <Box>
               <CardActionArea onClick={handleCollapse}>
-                <Typography style={{ marginBottom: "8px" }}>
+                <Typography className={classes.body}>
                   {data.by} - {timeAgo(new Date(data.time * 1000))}
                 </Typography>
               </CardActionArea>
               <Collapse in={!collapsed}>
                 <Box borderTop={"1px solid #ccc"} pt={2}>
-                  <Typography dangerouslySetInnerHTML={{ __html: data.text }} />
+                  <Typography
+                    dangerouslySetInnerHTML={{ __html: data.text }}
+                    className={classes.body}
+                  />
                   {data.kids
                     ? data.kids.map((kid, index) => {
                         return (

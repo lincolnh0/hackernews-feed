@@ -1,22 +1,13 @@
-import { useContext } from "react";
-import {
-  Container,
-  Grid,
-  Button,
-  Typography,
-  makeStyles,
-} from "@material-ui/core";
+import { Container, Grid, Button, makeStyles } from "@material-ui/core";
 import Zoom from "@material-ui/core/Zoom";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Brightness6Icon from "@material-ui/icons/Brightness6";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import { ThemeContext } from "lib/theme-context";
 
-export default function Layout({ children }) {
+export default function Layout({ toggleTheme, children }) {
   const classes = useStyles();
-  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <Container maxWidth="md" id="top">
       <Grid className={classes.nav}>

@@ -2,6 +2,8 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import ArrowBack from "@material-ui/icons/ArrowBack";
+import { makeStyles } from "@material-ui/core";
+import { lightTheme } from "styles/theme";
 
 import { useState, useEffect } from "react";
 import useSWR from "swr";
@@ -25,6 +27,7 @@ export default function Story({ id }) {
   const [preview, setPreview] = useState(false);
   const commentCount = 20;
   const [comments, setComments] = useState(commentCount);
+  const classes = useStyles();
 
   const togglePreview = () => {
     setPreview((prevState) => {
@@ -77,28 +80,32 @@ export default function Story({ id }) {
       <Head>
         <title>{data.title} - Hackernews</title>
       </Head>
-      <Paper style={{ marginTop: 8, marginBottom: 4, padding: 24 }}>
+      <Paper className={classes.body}>
         <Button onClick={() => router.back()}>
           <ArrowBack />
           Back
         </Button>
-        <Typography variant="h3" component="h1" style={{ padding: "16px 0" }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          className={classes.textPaddingX}
+        >
           {data.title}
         </Typography>
 
         {data.text ? (
           <Box>
-            <Typography style={{ padding: "16px" }}>
+            <Typography className={classes.textPaddingAround}>
               {data.by} - {timeAgo(new Date(data.time * 1000))}
             </Typography>
 
             <Typography
-              style={{ padding: "16px" }}
+              className={classes.textPaddingAround}
               dangerouslySetInnerHTML={{ __html: data.text }}
             />
           </Box>
         ) : (
-          <Typography style={{ padding: "16px 0" }}>
+          <Typography className={classes.textPaddingX}>
             by {data.by}
             {data.url
               ? "- " + data.url.split("/")[2].replace("www.", "")
@@ -131,7 +138,7 @@ export default function Story({ id }) {
           );
         })
       ) : (
-        <Paper style={{ padding: 16 }}>
+        <Paper className={classes.textPaddingAround}>
           <Typography>No comments yet</Typography>
         </Paper>
       )}
@@ -155,3 +162,20 @@ export async function getServerSideProps(context) {
     };
   }
 }
+
+const useStyles = makeStyles({
+  body: {
+    marginTop: "8px",
+    marginBottom: "4px",
+    padding: "24px",
+    "& a": {
+      color: lightTheme.palette.primary.main,
+    },
+  },
+  textPaddingAround: {
+    padding: "16px",
+  },
+  textPaddingX: {
+    padding: "16px 0",
+  },
+});
